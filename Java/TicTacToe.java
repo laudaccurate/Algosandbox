@@ -22,18 +22,16 @@ public class TicTacToe {
 
     printGameBoard(gameBoard);
 
-    Scanner scan = new Scanner(System.in);
-
-
     //to keep the game running, we loop on true
     while(true) {
+      Scanner scan = new Scanner(System.in);
       //take the user's position
       System.out.println("Enter your placement (1 - 9):");
       int playerPosition = scan.nextInt();
 
-      //check if the position enterd is vacant, else, ask again
+      //check if the position entered is vacant, else, ask again
       while(playerPositions.contains(playerPosition) || cpuPositions.contains(playerPosition)) {
-        System.out.println("Position taken!! Enter another position : ");
+        System.out.println("Position taken!! Enter another position (1 - 9): ");
         playerPosition = scan.nextInt();
       }
       placePiece(playerPosition, gameBoard, "player"); //place piece at the user's position
@@ -48,7 +46,7 @@ public class TicTacToe {
       Random rand = new Random();
       int cpuPosition = rand.nextInt(9) + 1;
 
-      //check if the position enterd is vacant, else, generate another position
+      //check if the position entered is vacant, else, generate another position
       while(cpuPositions.contains(cpuPosition) || playerPositions.contains(cpuPosition)) {
         cpuPosition = rand.nextInt(9) + 1;
       }
