@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:math';
 
-Set<int> playerPositions = new Set();
+//sets to record the user's placements and cortana's placements respectively
+Set<int> playerPositions = new Set(); //used a set bcos set is an unordered list
 Set<int> cortanaPositions = new Set();
 
 main(List<String> args) {
+  //characters to build the game board layout
   var gameBoard = [
     [' ', '|', ' ', '|', ' '],
     ['-', '+', '-', '+', '-'],
@@ -15,18 +17,21 @@ main(List<String> args) {
 
   printGameBoard(gameBoard);
 
+  //to keep the game running, we loop on true
   while (true) {
+    //take the user's position and parse to integer
     print('Enter your placement number (1 - 9) :');
     String playerInput = stdin.readLineSync();
     int playerPos = int.parse(playerInput);
 
+    //check if the position entered is vacant, else, ask again
     while (playerPositions.contains(playerPos) ||
         cortanaPositions.contains(playerPos)) {
       print('Position taken!! Enter another position (1 - 9) :');
       playerInput = stdin.readLineSync();
       playerPos = int.parse(playerInput);
     }
-    placePiece(playerPos, gameBoard, 'player');
+    placePiece(playerPos, gameBoard, 'player'); //place piece at user's position
 
     String result =
         checkWinner(); // if winning condition is met, end the game; else, continue..
@@ -35,13 +40,16 @@ main(List<String> args) {
       break;
     }
 
+    //generate cortana's position randomly
     var rand = new Random();
     int cortanaPos = rand.nextInt(9) + 1;
+    //check if the position is vacant, else, generate another position
     while (playerPositions.contains(cortanaPos) ||
         cortanaPositions.contains(cortanaPos)) {
       cortanaPos = rand.nextInt(9) + 1;
     }
-    placePiece(cortanaPos, gameBoard, 'cortana');
+    placePiece(cortanaPos, gameBoard,
+        'cortana'); //place piece at the cortans's position
 
     printGameBoard(gameBoard);
 
